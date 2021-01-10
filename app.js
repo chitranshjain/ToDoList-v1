@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 app.use(express.static("public"));
 
 //Connecting to the database
-mongoose.connect("mongodb+srv://admin-chitransh:test123@cluster0.kdy5e.mongodb.net/todolistDB?retryWrites=true&w=majority", {
+mongoose.connect("<mongodb-url>", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
