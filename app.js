@@ -11,7 +11,7 @@ app.set('view engine', 'ejs');
 app.use(express.static("public"));
 
 //Connecting to the database
-mongoose.connect("mongodb://localhost:27017/todolistDB", {
+mongoose.connect("mongodb+srv://admin-chitransh:test123@cluster0.kdy5e.mongodb.net/todolistDB?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -86,7 +86,7 @@ app.post("/", function (req, res) {
         }, function (err, thisCustomList) {
             thisCustomList.items.push(newItem);
             thisCustomList.save();
-            res.redirect("/" + listName);
+            res.redirect("/" + _.lowerCase(listName));
         });
     }
 });
@@ -124,7 +124,7 @@ app.post("/delete", function (req, res) {
                     }
                 }
                 thisCustomList.save();
-                res.redirect("/"+listName);
+                res.redirect("/"+_.lowerCase(listName));
             }
         });
     }
@@ -147,7 +147,7 @@ app.get("/:title", function (req, res) {
 
                 myCustomList.save();
 
-                const listPath = "/" + customListTitle;
+                const listPath = "/" + _.lowerCase(customListTitle);
 
                 res.redirect(listPath);
             } else {
@@ -160,6 +160,11 @@ app.get("/:title", function (req, res) {
     });
 });
 
-app.listen(3000, function () {
-    console.log("Server is up and running on port 3000");
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+
+app.listen(port, function () {
+    console.log("Server is up and running");
 });
